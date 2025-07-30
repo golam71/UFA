@@ -1,0 +1,31 @@
+---
+import { UserPlus, UserLock, House } from '@lucide/astro'
+
+let linkes = [
+  { name: 'Login', path: '/login', icon: UserLock },
+  { name: 'Register', path: '/register', icon: UserPlus },
+  { name: 'Dashboard', path: '/dashboard', icon: House },
+]
+---
+
+<nav class="m-3 mx-auto flex max-w-fit justify-center gap-4 rounded-xl ">
+  {
+    linkes.map((link) => (
+      <a
+        href={link.path}
+        class="flex items-center gap-2 rounded p-3 transition-all"
+      >
+        <link.icon class="h-5 w-5" />
+        <span>{link.name}</span>
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+</style>
