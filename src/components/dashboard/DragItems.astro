@@ -6,81 +6,80 @@ import {
   Type,
   Image,
   Moon,
+  CircleQuestionMark,
 } from '@lucide/astro'
 
 const data = [
   {
     name: 'Click',
-    icon: 'mouse-pointer-click',
+    icon: MousePointerClick,
     value: 'click',
     args: [],
     className: 'block-action',
   },
   {
-    name: 'Scroll',
-    icon: 'scroll',
+    name: 'Scroll (screen height)px',
+    icon: Scroll,
     value: 'scroll',
-    args: [],
+    args: ['height'],
     className: 'block-action',
   },
   {
     name: 'Move Cursor (x, y)',
-    icon: 'move',
+    icon: Move,
     value: 'move_cursor_xy',
     args: ['x', 'y'],
     className: 'block-move',
   },
   {
-    name: 'Move Cursor by Text',
-    icon: 'type',
+    name: 'Move Cursor by Text (text)',
+    icon: Type,
     value: 'move_cursor_text',
     args: ['text'],
     className: 'block-text',
   },
   {
-    name: 'Move Cursor by Image',
-    icon: 'image',
+    name: 'Move Cursor(image)',
+    icon: Image,
     value: 'move_cursor_image',
     args: ['image'],
     className: 'block-image',
   },
   {
-    name: 'Sleep',
-    icon: 'moon',
+    name: 'Sleep (time)',
+    icon: Moon,
     value: 'sleep',
     args: ['seconds'],
     className: 'block-sleep',
   },
+  {
+    name: 'If (expression)',
+    icon: CircleQuestionMark,
+    value: 'if',
+    args: ['expression'],
+    className: 'block-conditional',
+  },
 ]
-
-const icons = {
-  'mouse-pointer-click': MousePointerClick,
-  scroll: Scroll,
-  move: Move,
-  type: Type,
-  image: Image,
-  moon: Moon,
-}
 ---
 
 <div class="w-1/4 space-y-2 rounded-lg border bg-white p-4">
   <h2 class="text-lg font-bold">Drag Items</h2>
   {
     data.map((block) => {
-      const Icon = icons[block.icon] || MousePointerClick
+      const Icon = block.icon
       return (
         <div
-          class={`flex cursor-grab items-center gap-2 rounded-md border bg-gray-100 p-2 hover:bg-gray-200 ${block.className}`}
+          class={`flex cursor-grab items-center gap-2 border bg-gray-100 p-2 hover:bg-gray-200 ${block.className}`}
           draggable="true"
+          data-block={JSON.stringify(block)}
           on:dragstart={(e) => {
-            e.dataTransfer.setData('application/json', JSON.stringify(block))
             const img = new Image()
             img.src =
               'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=='
             e.dataTransfer.setDragImage(img, 0, 0)
           }}
         >
-          <Icon class="h-4 w-4 text-gray-600" />
+          <Icon class="h-4 w-4 text-sky-800" />
           <span>{block.name}</span>
         </div>
       )
