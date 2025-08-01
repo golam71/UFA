@@ -1,15 +1,14 @@
 ---
 import DragItems from '../components/dashboard/DragItems.astro'
-import Ai from '../components/dashboard/Ai.astro'
+
 import Workflow from '../components/dashboard/Workflow.astro'
 
 import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-  <div class="flex justify-around">
+  <div class="flex flex-1 gap-5 px-5 py-3">
     <DragItems />
-    <Ai />
     <Workflow />
   </div>
 </Layout>
