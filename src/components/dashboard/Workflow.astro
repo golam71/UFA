@@ -1,27 +1,52 @@
 <div
   id="drop-zone"
   class="flex flex-3/4 flex-col gap-4 rounded-lg border bg-gray-50 p-4"
+  id="sortable"
 >
   <h2 class="mb-2 text-lg font-bold">Workflow</h2>
 
-  <dialog open>hello</dialog>
+  <!-- <dialog open>hello</dialog> -->
 </div>
 
-<script is:inline>
-  const dropZone = document.getElementById('drop-zone')
+<script>
+  import { Sortable } from 'sortablejs'
+  const workflow = document.getElementById('drop-zone')
 
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault()
+  new Sortable(workflow, {
+    group: {
+      name: 'shared',
+      pull: 'clone',
+    },
+    animation: 150,
+  })
+  //click deletion
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1) {
+          const cross = document.createElement('span')
+          cross.textContent = '×'
+          cross.className = 'ml-auto cursor-pointer'
+          cross.onclick = (e) => {
+            e.stopPropagation()
+            node.remove()
+          }
+
+          // Append cross inside the first flex row div to keep it inline
+          const flexRow = node.querySelector('div.flex.items-center')
+          if (flexRow) {
+            flexRow.appendChild(cross)
+          } else {
+            // fallback if structure changes
+            node.appendChild(cross)
+          }
+        }
+      })
+    })
   })
 
-  dropZone.addEventListener('drop', (e) => {
-    console.log(e)
-    e.preventDefault()
-    const html = e.dataTransfer.getData('text/html')
-    if (html) {
-      dropZone.insertAdjacentHTML('beforeend', html)
-    }
-  })
+  observer.observe(workflow, { childList: true })
 </script>
 
 <style>
