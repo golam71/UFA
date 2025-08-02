@@ -25,20 +25,21 @@
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === 1) {
+          // Prevent adding the '×' if it already exists
+          if (node.querySelector('.cross-btn')) return
+
           const cross = document.createElement('span')
           cross.textContent = '×'
-          cross.className = 'ml-auto cursor-pointer'
+          cross.className = 'ml-auto cursor-pointer cross-btn'
           cross.onclick = (e) => {
             e.stopPropagation()
             node.remove()
           }
 
-          // Append cross inside the first flex row div to keep it inline
           const flexRow = node.querySelector('div.flex.items-center')
           if (flexRow) {
             flexRow.appendChild(cross)
           } else {
-            // fallback if structure changes
             node.appendChild(cross)
           }
         }
