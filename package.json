@@ -14,7 +14,6 @@
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.4",
     "gsap": "^3.13.0",
-    "sortablejs": "^1.15.6",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

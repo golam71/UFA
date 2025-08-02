@@ -1,3 +1,35 @@
-<div class="flex-3/4 rounded-lg border bg-gray-50 p-4">
+<div
+  id="drop-zone"
+  class="flex flex-3/4 flex-col gap-4 rounded-lg border bg-gray-50 p-4"
+>
   <h2 class="mb-2 text-lg font-bold">Workflow</h2>
+
+  <dialog open>hello</dialog>
 </div>
+
+<script is:inline>
+  const dropZone = document.getElementById('drop-zone')
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault()
+  })
+
+  dropZone.addEventListener('drop', (e) => {
+    console.log(e)
+    e.preventDefault()
+    const html = e.dataTransfer.getData('text/html')
+    if (html) {
+      dropZone.insertAdjacentHTML('beforeend', html)
+    }
+  })
+</script>
+
+<style>
+  dialog {
+    display: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid;
+  }
+</style>
