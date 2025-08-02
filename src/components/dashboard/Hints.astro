@@ -1,0 +1,50 @@
+<div class="flex w-1/4 flex-col justify-around gap-4 rounded-lg border p-4">
+  <div
+    class="relative flex-1 overflow-hidden border border-blue-900 bg-blue-300 p-3"
+    id="hint"
+  >
+    <div id="hint-content">Hover over a block to see information about it</div>
+  </div>
+  <div class="flex-3 border border-fuchsia-900 bg-fuchsia-300 p-3">Ai</div>
+</div>
+
+<script>
+  import { gsap } from 'gsap'
+
+  const hintContent = document.getElementById('hint-content')
+
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target.closest('[data-draggable]')
+    if (!target) return
+
+    const title = target.getAttribute('data-title')
+    const description = target.getAttribute('data-description')
+
+    if (title && description) {
+      const newContent = `
+        <h3 class="font-semibold text-sm mb-1">${title}</h3>
+        <p class="text-xs leading-5">${description}</p>
+      `
+
+      if (hintContent.innerHTML.trim() === newContent.trim()) return
+
+      const tl = gsap.timeline()
+
+      tl.to(hintContent, {
+        y: -20,
+        duration: 0.15,
+        ease: 'power2.in',
+        onComplete: () => {
+          hintContent.innerHTML = newContent
+          gsap.set(hintContent, { y: 5 })
+        },
+      })
+
+      tl.to(hintContent, {
+        y: 0,
+        duration: 0.2,
+        ease: 'power2.out',
+      })
+    }
+  })
+</script>

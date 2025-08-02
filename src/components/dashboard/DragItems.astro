@@ -12,6 +12,9 @@ import {
 const data = [
   {
     name: 'Click',
+    dataTitle: 'Click Action',
+    dataDescription:
+      'This simulates a mouse click. Useful for buttons or links. No setup needed. Works instantly. Like tapping your finger. Clear and simple. Great for basic tasks. One of the most used actions.',
     icon: MousePointerClick,
     value: 'click',
     args: [],
@@ -19,6 +22,9 @@ const data = [
   },
   {
     name: 'Scroll (screen height)px',
+    dataTitle: 'Scroll Screen',
+    dataDescription:
+      'Scrolls the screen by a number of pixels. Helps move pages up/down. Set the distance. Works like a mouse wheel. Simple and smooth. Ideal for reading long pages. Set height clearly.',
     icon: Scroll,
     value: 'scroll',
     args: ['height'],
@@ -26,6 +32,9 @@ const data = [
   },
   {
     name: 'Move Cursor (x, y)',
+    dataTitle: 'Move Cursor by Position',
+    dataDescription:
+      'Moves the mouse to a specific point. You give X and Y numbers. Like pointing to a spot. Needs accuracy. Best when you know where things are. Good for advanced control.',
     icon: Move,
     value: 'move_cursor_xy',
     args: ['x', 'y'],
@@ -33,6 +42,9 @@ const data = [
   },
   {
     name: 'Move Cursor by Text (text)',
+    dataTitle: 'Move Cursor by Text',
+    dataDescription:
+      'Finds a word or sentence and moves the cursor to it. No need for exact location. Very helpful for clear labels. Easy to use. Great for screen readers too.',
     icon: Type,
     value: 'move_cursor_text',
     args: ['text'],
@@ -40,6 +52,9 @@ const data = [
   },
   {
     name: 'Move Cursor(image)',
+    dataTitle: 'Move Cursor by Image',
+    dataDescription:
+      'Finds an image and moves the cursor to it. Great for icons or logos. Upload what to find. It matches the screen image. No guessing. Very visual and accurate.',
     icon: Image,
     value: 'move_cursor_image',
     args: ['image'],
@@ -47,6 +62,9 @@ const data = [
   },
   {
     name: 'Sleep (time)',
+    dataTitle: 'Pause / Wait',
+    dataDescription:
+      'Waits for a number of seconds. Like saying “hold on”. Good between steps. Prevents things going too fast. Simple to use. Just enter time in seconds.',
     icon: Moon,
     value: 'sleep',
     args: ['seconds'],
@@ -54,6 +72,9 @@ const data = [
   },
   {
     name: 'If (expression)',
+    dataTitle: 'Conditional Action',
+    dataDescription:
+      'Checks something before running a step. If it’s true, it continues. If not, it skips. Like asking “Is this true?” Smart for decisions. Easy logic use.',
     icon: CircleQuestionMark,
     value: 'if',
     args: ['expression'],
@@ -62,17 +83,18 @@ const data = [
 ]
 ---
 
-<div class="w-1/4 space-y-2 rounded-lg border bg-white p-4" id="drag-items">
-  <h2 class="text-lg font-bold">Drag Items</h2>
+<div class="w-1/4 space-y-2 rounded-lg border p-4" id="drag-items">
   {
     data.map((block) => {
       const Icon = block.icon
       return (
         <div
-          class={`hover:bg-opacity-80 flex flex-col gap-1 border p-2 ${block.className}`}
+          class={`flex flex-col gap-1 border p-2 ${block.className}`}
           draggable="true"
           data-block={JSON.stringify(block)}
           data-draggable
+          data-title={block.dataTitle}
+          data-description={block.dataDescription}
         >
           <div class="flex items-center gap-2">
             <Icon class="h-4 w-4" />
@@ -118,6 +140,8 @@ const data = [
       put: false,
     },
     animation: 150,
+    // sort: false,
+    multiDrag: true,
   })
 
   const initNestedSortables = () => {
